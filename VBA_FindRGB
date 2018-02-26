@@ -1,0 +1,22 @@
+Sub FindRGB()
+
+'VBA Powerpoint Script
+'For each selected shape in a MS Doc, overwrite text with RGB values of Foreground Fill
+'Uses Textframe2 hence incompatible with MS Office 2003 or earlier 
+
+
+Dim oSh As Shape
+Dim ColorVal As Variant
+Dim AllTxt As String
+For Each oSh In ActiveWindow.Selection.ShapeRange
+    With oSh.Fill
+    R = "R: " & (.ForeColor Mod 256) & vbCr
+    G = "G: " & (.ForeColor \ 256 Mod 256) & vbCr
+    B = "B: " & (.ForeColor \ 65536 Mod 256)
+    AllTxt = R & G & B
+    oSh.TextFrame2.TextRange.Text = AllTxt
+    End With
+Next
+End Sub
+
+
