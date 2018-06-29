@@ -1,0 +1,28 @@
+
+Sub ConsoleCols()
+Dim rng As Range
+Dim rng2 As Range
+Dim cell As Range
+
+Set rng2 = Sheet3.Range("a1:DA8000")
+'sheet containing data you want to consolidate
+
+With Sheet2
+    For Each cell In rng2
+            If cell.Value = "Hourly Rate" Or cell.Value = "Weekly Fee" Or cell.Value = "Sleep In Rate" Then
+                Cells(Rows.Count, 1).End(xlUp).Offset(1, 0) = cell
+                'provide the cell value (e.g. If criteria)
+                Cells(Rows.Count, 2).End(xlUp).Offset(1, 0) = cell.Offset(0, -1)
+                'provide value in cell one column to the left of the cell meeting criteria
+                Cells(Rows.Count, 3).End(xlUp).Offset(1, 0) = Sheet3.Cells(cell.Row, 105)
+                'Get the value for the cell in col150 in the same row 
+                Cells(Rows.Count, 4).End(xlUp).Offset(1, 0) = Sheet3.Cells(cell.Row, 97)
+                'etc.
+                Cells(Rows.Count, 5).End(xlUp).Offset(1, 0) = Sheet3.Cells(cell.Row, 9)
+                Cells(Rows.Count, 6).End(xlUp).Offset(1, 0) = Sheet3.Cells(cell.Row, 3)
+            End If
+    Next cell
+  End With
+  End Sub
+
+
