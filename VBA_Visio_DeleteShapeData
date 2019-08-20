@@ -1,0 +1,11 @@
+Sub DelDat()
+Dim sel As Selection
+Dim selsh As Shape
+Set sel = ActiveWindow.Selection ' create "selection"
+For x = 1 To sel.Count           ' iterate all shapes (from first to last) in selection
+Set selsh = sel(x)               ' set current selected shape
+For y = selsh.RowCount(visSectionProp) - 1 To 4 Step -1 ' deletes "Prop." rows from bottom to top, finishing at specified row (e.g. row 4)
+selsh.DeleteRow visSectionProp, y ' in current shape delete current row in section "Shape Data"
+Next y
+Next x
+End Sub
