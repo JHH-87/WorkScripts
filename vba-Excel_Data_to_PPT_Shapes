@@ -37,13 +37,13 @@ For i = 1 To ws.Range("A100").End(xlUp).Row
             Shp2.Name = "colshp_" & i
             Shp2.Line.ForeColor.RGB = RGB(0, 0, 0)
             Shp2.Line.Weight = 0.75
-            If ws.Cells(i, 2) = "Finance" Then
+            If ws.Cells(i, 2) = "Condition1" Then
                 Shp2.Fill.ForeColor.RGB = RGB(146, 208, 80)
-            ElseIf ws.Cells(i, 2) = "Rent" Then
+            ElseIf ws.Cells(i, 2) = "Condition2" Then
                 Shp2.Fill.ForeColor.RGB = RGB(255, 181, 33)
-            ElseIf ws.Cells(i, 2) = "Quality" Then
+            ElseIf ws.Cells(i, 2) = "Condition3" Then
                 Shp2.Fill.ForeColor.RGB = RGB(33, 218, 255)
-            Else
+            Else 'e.g. Fail condition
                 Shp2.Fill.ForeColor.RGB = RGB(255, 255, 255)
             End If
         Set ShpGrp = ActivePresentation.Slides(1).Shapes.Range(Array("textshp_" & i, "colshp_" & i))
