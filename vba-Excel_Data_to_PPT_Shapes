@@ -1,0 +1,54 @@
+'Purpose of file is to take data from excel & create a shape group  for each row 
+' Requires Tools --> References --> Microsoft Excel 16.0 Object Library
+Sub Excel_Data_to_PPT_Shapes()
+
+    Dim wb As Workbook
+    Set wb = Workbooks.Open("file.xlsx")
+    Set ws = wb.Sheets(1)
+   
+Set myDocument = ActivePresentation.Slides(1)
+Dim i As Integer
+i = 1
+j = 0
+For i = 1 To ws.Range("A100").End(xlUp).Row
+
+        Set Shp = myDocument.Shapes.AddShape(Type:=msoShapeRectangle, Top:=(1 + (i * 10) + (100 / 3.52 * 0.7) * i), Left:=1 + j, Width:=(100 / 3.52 * 2.6), Height:=(100 / 3.52 * 0.7))
+        
+            Shp.Name = "textshp_" & i
+        
+            Shp.Fill.ForeColor.RGB = RGB(255, 255, 255)
+        
+            Shp.Line.ForeColor.RGB = RGB(0, 0, 0)
+            Shp.Line.Weight = 0.75
+          
+            
+            Shp.TextFrame.MarginTop = (100 / 3.52 * 0.1)
+            Shp.TextFrame.MarginLeft = (100 / 3.52 * 0.1)
+            Shp.TextFrame.MarginBottom = (100 / 3.52 * 0.1)
+            Shp.TextFrame.MarginRight = (100 / 3.52 * 0.1)
+            Shp.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+            Shp.TextFrame2.TextRange.Font.Size = 8
+            Shp.TextFrame2.TextRange.ParagraphFormat.Alignment = msoAlignLeft
+            Shp.TextFrame2.HorizontalAnchor = msoAnchorNone
+            
+            Shp.TextFrame.TextRange.Text = ws.Cells(i, 1)
+        
+        Set Shp2 = myDocument.Shapes.AddShape(Type:=msoShapeRectangle, Top:=1 + i * 10 + (100 / 3.52 * 0.7) * i, Left:=j + (1 + (100 / 3.52 * 2.6)), Width:=(100 / 3.52 * 0.5), Height:=(100 / 3.52 * 0.7))
+            Shp2.Name = "colshp_" & i
+            Shp2.Line.ForeColor.RGB = RGB(0, 0, 0)
+            Shp2.Line.Weight = 0.75
+            If ws.Cells(i, 2) = "Finance" Then
+                Shp2.Fill.ForeColor.RGB = RGB(146, 208, 80)
+            ElseIf ws.Cells(i, 2) = "Rent" Then
+                Shp2.Fill.ForeColor.RGB = RGB(255, 181, 33)
+            ElseIf ws.Cells(i, 2) = "Quality" Then
+                Shp2.Fill.ForeColor.RGB = RGB(33, 218, 255)
+            Else
+                Shp2.Fill.ForeColor.RGB = RGB(255, 255, 255)
+            End If
+        Set ShpGrp = ActivePresentation.Slides(1).Shapes.Range(Array("textshp_" & i, "colshp_" & i))
+            ShpGrp.Group
+       
+        
+Next
+End Sub
