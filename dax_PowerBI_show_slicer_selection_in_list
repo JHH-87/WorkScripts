@@ -1,0 +1,10 @@
+// DAX 'New Measure' to show PowerBI viewer using a card visualisation what slicer items have been selected e.g. where slicer is on another page
+// Derived (with thanks) from https://powerpivotpro.com/2017/03/latest-best-way-catchcaptureinspect-slicer-selections/ and https://community.powerbi.com/t5/Desktop/Opposite-of-ALLSELECTED-ALLNOTSELECTED/td-p/162152
+
+sliced_selection = 
+if(not(ISFILTERED(table[column])),"All", 										              // if there's no selection made in the slicer then return 'All', otherwise
+	if(countrows(ALLSELECTED(table[column]))>N, 							            	// L if too many (>N) selections have been made to reasonably show / fit in the card then
+		"All except "&EXCEPT(all(table[column]),ALLSELECTED(table[column])),	//   |-return "All except " and list of all items in table[column] except selections
+		CONCATENATEX(ALLSELECTED(table[column]),table[column],", ")	     			//   L return concatenated string of all table[column] selections from table[column]
+	)
+)
