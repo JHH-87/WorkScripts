@@ -1,0 +1,19 @@
+' Changes shape internal text dimensions
+  
+Sub Set_prop()
+Dim sel As Selection
+Dim selsh As Shape
+Set sel = ActiveWindow.Selection ' create "selection"
+For x = 1 To sel.Count           ' iterate all shapes (from first to last) in selection
+Set selsh = sel(x)               ' set current selected shape
+
+selsh.CellsSRC(visSectionObject, visRowTextXForm, visXFormWidth).FormulaU = "Width*0.9"
+If Len(selsh.CellsSRC(visSectionProp, 5, visCustPropsValue).FormulaU) < 17 Then
+    selsh.CellsSRC(visSectionObject, visRowTextXForm, visXFormHeight).FormulaU = "Height*0.5"
+ElseIf Len(selsh.CellsSRC(visSectionProp, 5, visCustPropsValue).Formula) < 35 Then
+    selsh.CellsSRC(visSectionObject, visRowTextXForm, visXFormHeight).FormulaU = "Height*0.6"
+Else
+    selsh.CellsSRC(visSectionObject, visRowTextXForm, visXFormHeight).FormulaU = "Height*0.9"
+End If
+Next x
+End Sub
