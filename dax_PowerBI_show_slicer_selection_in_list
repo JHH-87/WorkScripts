@@ -8,3 +8,13 @@ if(not(ISFILTERED(table[column])),"All", 										              // if there's n
 		CONCATENATEX(ALLSELECTED(table[column]),table[column],", ")	     			//   L return concatenated string of all table[column] selections from table[column]
 	)
 )
+
+//Alternative Approach (delete as appropriate)
+sliced_selection = 
+if(or(not(ISFILTERED(table[column])),COUNTROWS(ALLSELECTED(table[column]))=6),"-",
+	if(COUNTROWS(ALLSELECTED(table[column]))=7,"All except "&EXCEPT(all(table[column]),ALLSELECTED(table[column])),
+        if(countrows(ALLSELECTED(table[column]))>3,
+		countrows(ALLSELECTED(table[column]))&" items selected",
+		CONCATENATEX(ALLSELECTED(table[column]),table[column],", ")
+	)
+))
